@@ -36,7 +36,7 @@
 <div id="mapping">
 	<Map lat={55.95} lon={-3.18} zoom={10} {select}>
 		{#each sites as site}
-			<MapMarker lat={site.lat} lon={site.lng} label={site.label} id={site.id}/>
+			<MapMarker lat={site.lat} lon={site.lon} name={site.name} slug={site.slug}/>
 		{/each}
 	</Map>
 </div>

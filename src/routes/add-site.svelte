@@ -5,15 +5,16 @@
 <script>
 	import { goto } from "@sapper/app";
 	import Map from '../components/Map.svelte';
-	import { isEmpty, invalidCoord } from '../components/inputValidation'
+	import { strLen, invalidCoord } from '../components/inputValidation'
 	import { Form, FormGroup, Input, Label } from 'sveltestrap/src';
 	import { Button, Modal,	ModalBody, ModalFooter,	ModalHeader } from 'sveltestrap/src';
 
 	let select = true;
 	let newLat;
 	let newLon;
-	let newID;
+	let newSlug;
 	let siteName = '';
+	let siteDesc = '';
 	let open = false;
 	let itIsAdded = false;
 	let formValidator = '';
@@ -29,15 +30,16 @@
 		open = false;
 		itIsAdded = false;
 		siteName = '';
+		siteDesc = '';
 		formValidator = '';
-		if (newID) {
-			goto(`/sites/${newID}`)
+		if (newSlug) {
+			goto(`/sites/${newSlug}`)
 		}
 	}
 
 	function addNewSite () {
-		if (isEmpty(siteName)) {
-			formValidator = "Site name cannot be empty";
+		if (strLen(siteName, 3, 30)) {
+			formValidator = "Site name needs to have 3-30 characters!";
 		}
 		else if (invalidCoord(newLat, 90)) {
 			formValidator = "Invalid Latitude!"
@@ -45,12 +47,18 @@
 		else if (invalidCoord(newLon, 180)) {
 			formValidator = "Invalid Longitude!"
 		}
+		else if (strLen(siteDesc, 10, 200)) {
+			formValidator = "Site description needs to have 10-200 characters!";
+		}
 		else {
 			var requestOptions = {
 				method: 'POST',
-				body: JSON.stringify({ label: siteName,
+				body: JSON.stringify({ 
+					name: siteName,
 					lat: newLat,
-					lng: newLon }),
+					lon: newLon,
+					description: siteDesc
+				}),
 				headers: { "Content-Type": "application/json" }
 			};
 
@@ -64,8 +72,8 @@
 				}
 			})
 			.then(result => {
-				if (result.label) {
-					newID = result.id;
+				if (result.slug) {
+					newSlug = result.slug;
 					console.log(result);
 				}
 				else {
@@ -120,6 +128,12 @@
 					<Label for="longitude">Longitude</Label>
 					<Input type="number" id="longitude" bind:value={newLon} />
 				</FormGroup>
+				<FormGroup>
+					<Label for="description">Description</Label>
+					<Input type="textarea" id="description" bind:value={siteDesc} 
+						placeholder="Access, depth, risks ..." />
+				  </FormGroup>
+
 			</Form>	
 		{:else}
 			{#if serverErr}

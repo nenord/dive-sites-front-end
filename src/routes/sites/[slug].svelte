@@ -15,6 +15,8 @@
 
 <script>
 	export let site;
+	import Map from '../../components/Map.svelte';
+	import MapMarker from '../../components/MapMarker.svelte';
 </script>
 
 <style>
@@ -51,15 +53,34 @@
 	.content :global(li) {
 		margin: 0 0 0.5em 0;
 	}
+
+	.container {
+		display: flex;
+	}
+
+	#mapping {
+		width: 80%;
+		height: 500px;
+		margin-left:10px;
+	}
 </style>
 
 <svelte:head>
-	<title>{site.label}</title>
+	<title>{site.name}</title>
 </svelte:head>
 
-<h2>{site.label}</h2>
-
-<div class="content">
-	<p>Latitude: {site.lat}</p>
-	<p>Longitude: {site.lng}</p>
+<h2>{site.name}</h2>
+<div class="container">
+	<div class="content">
+		<p>Latitude: {site.lat}</p>
+		<p>Longitude: {site.lon}</p>
+		<h4>Description</h4>
+		<p>{site.description}</p>
+	</div>
+	<div id="mapping">
+		<Map lat={site.lat} lon={site.lon} zoom={12} select={false}}>
+			<MapMarker lat={site.lat} lon={site.lon} name={site.name} slug={site.slug}/>
+		</Map>
+	</div>
 </div>
+

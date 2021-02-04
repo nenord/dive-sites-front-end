@@ -7,11 +7,11 @@
 
 	export let lat;
 	export let lon;
-	export let label;
-	export let id;
+	export let name;
+	export let slug;
 
 	const popup = new mapbox.Popup({ offset: 25, closeButton: false })
-		.setHTML(`<a href="/sites/${id}">${label}</a>`);
+		.setHTML(`<a href="/sites/${slug}">${name}</a>`);
 
 	const marker = new mapbox.Marker()
 		.setLngLat([lon, lat])
