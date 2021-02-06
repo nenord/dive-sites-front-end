@@ -32,6 +32,7 @@
 		siteName = '';
 		siteDesc = '';
 		formValidator = '';
+		serverErr = '';
 		if (newSlug) {
 			goto(`/sites/${newSlug}`)
 		}
@@ -64,10 +65,10 @@
 
 		fetch("http://localhost:8000/create_site", requestOptions)
 			.then((r) => {
-				if (r.status >= 200 && r.status <= 299) {
+				if (r.status == 201 || r.status == 409) {
 					return r.json();
-				} else {
-					serverErr = 'Something went wrong, please try again';
+				} 
+				else {
 					return r.text();
 				}
 			})
@@ -76,8 +77,12 @@
 					newSlug = result.slug;
 					console.log(result);
 				}
+				else if (result.detail) {
+					serverErr = result.detail;
+				}
 				else {
-					console.log(JSON.parse(result).detail[0].msg);
+					let info = JSON.parse(result);
+					serverErr = `Error (${info.detail[0].loc[1]}): ${info.detail[0].msg}`;
 				}
 			});
 		
@@ -138,6 +143,8 @@
 		{:else}
 			{#if serverErr}
 				<h6>{serverErr}</h6>
+			{:else if !newSlug}
+				<p>Hmm, something is wrong with the server ...</p>
 			{:else}
 				<h6>Site '{siteName}' added!</h6>
 			{/if}

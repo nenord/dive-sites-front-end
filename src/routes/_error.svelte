@@ -33,7 +33,11 @@
 
 <h1>{status}</h1>
 
-<p>{error.message}</p>
+{#if error.detail}
+	<p>{error.detail}</p>
+{:else}
+	<p>{error.message}</p>
+{/if}
 
 {#if dev && error.stack}
 	<pre>{error.stack}</pre>
