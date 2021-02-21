@@ -1,7 +1,7 @@
 {
-  "name": "TODO",
-  "description": "TODO",
-  "version": "0.0.1",
+  "name": "Daibh front end",
+  "description": "A crowd sources dive site app",
+  "version": "0.1",
   "scripts": {
     "dev": "sapper dev",
     "build": "sapper build --legacy",
@@ -32,5 +32,8 @@
     "rollup-plugin-terser": "^7.0.0",
     "sapper": "^0.28.0",
     "svelte": "^3.32.0"
+  },
+  "engines": {
+    "node": "12.8.3"
   }
 }

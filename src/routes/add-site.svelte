@@ -63,7 +63,7 @@
 				headers: { "Content-Type": "application/json" }
 			};
 
-		fetch("http://localhost:8000/create_site", requestOptions)
+		fetch("http://35.241.204.178/create_site", requestOptions)
 			.then((r) => {
 				if (r.status == 201 || r.status == 409) {
 					return r.json();

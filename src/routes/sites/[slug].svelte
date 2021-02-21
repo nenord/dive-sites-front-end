@@ -1,6 +1,6 @@
 <script context="module">
 	export async function preload({ params }) {
-		const res = await this.fetch(`http://localhost:8000/sites/${params.slug}`);
+		const res = await this.fetch(`http://35.241.204.178/sites/${params.slug}`);
 		const data = await res.json();
 
 		if (res.status === 200) {
@@ -18,40 +18,19 @@
 </script>
 
 <style>
-	.content :global(h2) {
-		font-size: 1.4em;
-		font-weight: 500;
-	}
-
-	.content :global(pre) {
-		background-color: #f9f9f9;
-		box-shadow: inset 1px 1px 5px rgba(0, 0, 0, 0.05);
-		padding: 0.5em;
-		border-radius: 2px;
-		overflow-x: auto;
-	}
-
-	.content :global(pre) :global(code) {
-		background-color: transparent;
-		padding: 0;
-	}
-
-	.content :global(ul) {
-		line-height: 1.5;
-	}
-
-	.content :global(li) {
-		margin: 0 0 0.5em 0;
-	}
-
 	.container {
 		display: flex;
+		flex-flow: row wrap;
 	}
 
-	#mapping {
-		width: 80%;
-		height: 500px;
-		margin-left:10px;
+	.content {
+		flex: 1 0 300px;
+		margin-right: 10px;
+	}
+
+	.map {
+		flex: 1 0 300px;
+		height: 400px;
 	}
 </style>
 
@@ -67,7 +46,7 @@
 		<h4>Description</h4>
 		<p>{site.description}</p>
 	</div>
-	<div id="mapping">
+	<div class="map">
 		<Map lat={site.lat} lon={site.lon} zoom={12} select={false}}>
 			<MapMarker lat={site.lat} lon={site.lon} name={site.name} slug={site.slug}/>
 		</Map>
