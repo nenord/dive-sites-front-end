@@ -1,7 +1,6 @@
 {
-  "name": "Daibh-front-end",
+  "name": "Daibh-front-gitend",
   "description": "A crowd sources dive site app",
-  "version": "0.1",
   "scripts": {
     "dev": "sapper dev",
     "build": "sapper build --legacy",
