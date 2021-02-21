@@ -11,7 +11,7 @@
     "compression": "^1.7.1",
     "mapbox": "^1.0.0-beta10",
     "mapbox-gl": "^2.0.1",
-    "polka": "next",
+    "polka": "1.0.0-next.11",
     "sirv": "^1.0.0",
     "sveltestrap": "^3.12.2"
   },
