@@ -1,6 +1,6 @@
 <script context="module">
 	export function preload() {
-		return this.fetch(`http://35.241.204.178/sites`).then(r => r.json()).then(sites => {
+		return this.fetch(`http://freedive-api.nenoapps.tk/sites`).then(r => r.json()).then(sites => {
 			return { sites };
 		});
 	}
