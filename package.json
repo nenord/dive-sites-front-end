@@ -1,5 +1,5 @@
 {
-  "name": "Daibh-front-gitend",
+  "name": "daibh-front-end",
   "description": "A crowd sources dive site app",
   "scripts": {
     "dev": "sapper dev",
@@ -34,6 +34,7 @@
     "svelte": "^3.32.0"
   },
   "engines": {
-    "node": "12.18.3"
+    "node": "12.18.3",
+    "npm": "7.5.2"
   }
 }
