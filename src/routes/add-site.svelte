@@ -63,7 +63,7 @@
 				headers: { "Content-Type": "application/json" }
 			};
 
-		fetch("http://freedive-api.nenoapps.tk/create_site", requestOptions)
+		fetch("http://api.nenoapps.tk/create_site", requestOptions)
 			.then((r) => {
 				if (r.status == 201 || r.status == 409) {
 					return r.json();

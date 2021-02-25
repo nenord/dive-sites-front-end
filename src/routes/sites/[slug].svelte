@@ -1,6 +1,6 @@
 <script context="module">
 	export async function preload({ params }) {
-		const res = await this.fetch(`http://freedive-api.nenoapps.tk/sites/${params.slug}`);
+		const res = await this.fetch(`http://api.nenoapps.tk/sites/${params.slug}`);
 		const data = await res.json();
 
 		if (res.status === 200) {
