@@ -1,5 +1,5 @@
 <svelte:head>
-	<title>Add dive site</title>
+	<title>Add sites</title>
 </svelte:head>
 
 <script>

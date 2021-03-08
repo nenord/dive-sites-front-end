@@ -18,7 +18,7 @@
 </style>
 
 <svelte:head>
-	<title>Sites</title>
+	<title>Dive sites list</title>
 </svelte:head>
 
 <h2>Sites</h2>

@@ -28,7 +28,7 @@
 </style>
 
 <svelte:head>
-	<title>Daibh - dive sites map</title>
+	<title>Dive sites map</title>
 </svelte:head>
 
 <h2>Find dive sites</h2>
