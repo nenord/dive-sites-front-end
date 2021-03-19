@@ -5,7 +5,7 @@
 <script>
 	import { goto } from "@sapper/app";
 	import Map from '../components/Map.svelte';
-	import { strLen, invalidCoord } from '../components/inputValidation'
+	import { strLen, invalidCoord, invalidDepth, lenForPark } from '../components/inputValidation'
 	import { Form, FormGroup, Input, Label } from 'sveltestrap/src';
 	import { Button, Modal,	ModalBody, ModalFooter,	ModalHeader } from 'sveltestrap/src';
 
@@ -15,6 +15,8 @@
 	let newSlug;
 	let siteName = '';
 	let siteDesc = '';
+	let siteDepth;
+	let sitePark = '';
 	let open = false;
 	let itIsAdded = false;
 	let formValidator = '';
@@ -48,18 +50,29 @@
 		else if (invalidCoord(newLon, 180)) {
 			formValidator = "Invalid Longitude!"
 		}
+		else if (invalidDepth(siteDepth)) {
+			formValidator = "Depth mush be between 1 and 200 m!";
+		}
 		else if (strLen(siteDesc, 10, 200)) {
 			formValidator = "Site description needs to have 10-200 characters!";
 		}
+		else if (lenForPark(sitePark, 10, 500)) {
+			formValidator = "If added, park and approach input must have 10-500 characters!";
+		}
 		else {
+			let payload = { 
+				name: siteName,
+				lat: newLat,
+				lon: newLon,
+				description: siteDesc,
+				depth: siteDepth
+			}
+			if (sitePark.trim().length >= 10) {
+				payload.park_approach = sitePark;
+			}
 			var requestOptions = {
 				method: 'POST',
-				body: JSON.stringify({ 
-					name: siteName,
-					lat: newLat,
-					lon: newLon,
-					description: siteDesc
-				}),
+				body: JSON.stringify(payload),
 				headers: { "Content-Type": "application/json" }
 			};
 
@@ -122,23 +135,31 @@
 		{#if !itIsAdded}
 			<Form>
 				<FormGroup>
-					<Label for="siteName">Site name</Label>
+					<Label for="siteName">Site name*</Label>
 					<Input plaintext id="siteName" bind:value={siteName} placeholder="Add site name" />
 				</FormGroup>
 				<FormGroup>
-					<Label for="latitude">Latitude</Label>
+					<Label for="latitude">Latitude*</Label>
 					<Input type="number" name="number" id="latitude" bind:value={newLat} />
 				</FormGroup>
 				<FormGroup>
-					<Label for="longitude">Longitude</Label>
+					<Label for="longitude">Longitude*</Label>
 					<Input type="number" id="longitude" bind:value={newLon} />
 				</FormGroup>
 				<FormGroup>
-					<Label for="description">Description</Label>
+					<Label for="depth">Depth*</Label>
+					<Input type="number" id="depth" bind:value={siteDepth} />
+				</FormGroup>
+				<FormGroup>
+					<Label for="description">Description*</Label>
 					<Input type="textarea" id="description" bind:value={siteDesc} 
-						placeholder="Access, depth, risks ..." />
-				  </FormGroup>
-
+						placeholder="Area, risks, visibility, sealife ... " />
+				</FormGroup>
+				<FormGroup>
+					<Label for="park">Park and approach</Label>
+					<Input type="textarea" id="park" bind:value={sitePark} 
+						placeholder="Optional, where to park and how to approach the site" />
+				</FormGroup>
 			</Form>	
 		{:else}
 			{#if serverErr}

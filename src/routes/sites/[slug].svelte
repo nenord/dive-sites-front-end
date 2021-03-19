@@ -43,8 +43,12 @@
 	<div class="content">
 		<p>Latitude: {site.lat}</p>
 		<p>Longitude: {site.lon}</p>
+		<p><span style="font-weight: bold">Max depth </span>(estimate): 
+			<span style="font-weight: bold">{site.depth}</span> meters</p>
 		<h4>Description</h4>
 		<p>{site.description}</p>
+		<h4>Parking and approach</h4>
+		<p>{site.park_approach}</p>
 	</div>
 	<div class="map">
 		<Map lat={site.lat} lon={site.lon} zoom={12} select={false}}>
