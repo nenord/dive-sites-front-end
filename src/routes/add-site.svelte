@@ -51,13 +51,13 @@
 			formValidator = "Invalid Longitude!"
 		}
 		else if (invalidDepth(siteDepth)) {
-			formValidator = "Depth mush be between 1 and 200 m!";
+			formValidator = "Depth must be between 1 and 200 m!";
 		}
 		else if (strLen(siteDesc, 10, 200)) {
 			formValidator = "Site description needs to have 10-200 characters!";
 		}
 		else if (lenForPark(sitePark, 10, 500)) {
-			formValidator = "If added, park and approach input must have 10-500 characters!";
+			formValidator = "Park and approach must have 10-50 characters OR be empty!";
 		}
 		else {
 			let payload = { 
@@ -122,7 +122,7 @@
 
 <h2>Add a dive site</h2>
 
-<p class="hide">To add a dive site, click on the site location on the map below!</p>
+<p class="hide">To add a dive site, click on the site's location!</p>
 
 <div id="mapping">
 	<Map lat={55.95} lon={-3.18} zoom={10} {select} on:message={handleMessage}></Map>
