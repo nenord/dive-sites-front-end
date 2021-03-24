@@ -33,6 +33,8 @@
 		itIsAdded = false;
 		siteName = '';
 		siteDesc = '';
+		sitePark = '';
+		siteDepth = 0;
 		formValidator = '';
 		serverErr = '';
 		if (newSlug) {
@@ -56,8 +58,8 @@
 		else if (strLen(siteDesc, 10, 200)) {
 			formValidator = "Site description needs to have 10-200 characters!";
 		}
-		else if (lenForPark(sitePark, 10, 500)) {
-			formValidator = "Park and approach must have 10-50 characters OR be empty!";
+		else if (lenForPark(sitePark, 10, 200)) {
+			formValidator = "Park and approach must have 10-200 characters OR be empty!";
 		}
 		else {
 			let payload = { 
