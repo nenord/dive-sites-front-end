@@ -10,6 +10,8 @@ Deployed via Dokku running on Google Cloud VM.
 
 ## Roadmap
 Add users and login to track who created the app
+
 Edit sites – only if a user created the site (or user is Admin)
+
 Add images to sites using CouchDB attachments (NoSQL DB)
 
