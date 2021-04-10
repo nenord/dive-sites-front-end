@@ -1,18 +1,14 @@
-# Daibh SSR front end
+# Front-end SSR: Crowdsourced dive sites app
 
-### Running the project
+A **work in progress** example: http://dives.nenoapps.tk/
 
-Run the api and postgis containers by:
+A front end for https://github.com/nenord/dive-sites-api.
 
-```bash
-docker-compose up -d db fast
-```
+Built using Sapper/Svelte
+Deployed via Dokku running on Google Cloud VM.
 
-Clone the repo and go into the folder
+## Roadmap
+Add users and login to track who created the app
+Edit sites – only if a user created the site (or user is Admin)
+Add images to sites using CouchDB attachments (NoSQL DB)
 
-```bash
-npm install
-npm run dev
-```
-
-This will start the development server on [localhost:3000](http://localhost:3000) that should make api calls to local api form docker-compose.
