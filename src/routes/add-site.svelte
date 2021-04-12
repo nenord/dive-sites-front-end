@@ -3,19 +3,11 @@
 </svelte:head>
 
 <script>
-	import { goto, stores } from "@sapper/app";
-	import { onDestroy } from 'svelte';
+	import { goto } from "@sapper/app";
 	import Map from '../components/Map.svelte';
 	import { strLen, invalidCoord, invalidDepth, lenForPark } from '../components/inputValidation'
 	import { Form, FormGroup, Input, Label } from 'sveltestrap/src';
 	import { Button, Modal,	ModalBody, ModalFooter,	ModalHeader } from 'sveltestrap/src';
-
-	let apiUrl = '';
-  	const { session } = stores();
-    const unsubscribe = session.subscribe(value => {
-    	apiUrl = value.API_URL;
-  	});
-  	onDestroy(unsubscribe);
 	
 	let select = true;
 	let newLat;
@@ -86,7 +78,7 @@
 				headers: { "Content-Type": "application/json" }
 			};
 
-		fetch(`${apiUrl}/sites/create`, requestOptions)
+		fetch(`http://api.nenoapps.tk/sites/create`, requestOptions)
 			.then((r) => {
 				if (r.status == 201 || r.status == 409) {
 					return r.json();
@@ -135,7 +127,7 @@
 <p class="hide">To add a dive site, click on the site's location!</p>
 
 <div id="mapping">
-	<Map lat={55.95} lon={-3.18} zoom={10} {select} on:message={handleMessage}></Map>
+	<Map lat={55.95} lon={-3.18} zoom={8} {select} on:message={handleMessage}></Map>
 </div>
 
 <div>

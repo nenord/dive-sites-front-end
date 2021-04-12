@@ -12,11 +12,7 @@ polka() // You can also use Express
 	.use(
 		compression({ threshold: 0 }),
 		sirv('static', { dev }),
-		sapper.middleware({
-			session: () => ({
-				API_URL,
-			}),
-		}),
+		sapper.middleware()
 	)
 	.listen(PORT, err => {
 		if (err) console.log('error', err);
