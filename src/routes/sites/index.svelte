@@ -29,6 +29,6 @@
 				tell Sapper to heroku ad the data for the page as soon as
 				the user hovers over the link or taps it, instead of
 				waiting for the 'click' event -->
-		<li><a rel="prefetch" href="sites/{site.slug}">{site.name}</a></li>
+		<li><a rel="prefetch" href="sites/{site._id}">{site.name}</a></li>
 	{/each}
 </ul>

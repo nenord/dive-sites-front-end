@@ -78,7 +78,7 @@
 				headers: { "Content-Type": "application/json" }
 			};
 
-		fetch("http://api.nenoapps.tk/create_site", requestOptions)
+		fetch("http://api.nenoapps.tk/sites/create", requestOptions)
 			.then((r) => {
 				if (r.status == 201 || r.status == 409) {
 					return r.json();
@@ -88,8 +88,8 @@
 				}
 			})
 			.then(result => {
-				if (result.slug) {
-					newSlug = result.slug;
+				if (result._id) {
+					newSlug = result._id;
 					console.log(result);
 				}
 				else if (result.detail) {
