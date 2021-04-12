@@ -3,12 +3,20 @@
 </svelte:head>
 
 <script>
-	import { goto } from "@sapper/app";
+	import { goto, stores } from "@sapper/app";
+	import { onDestroy } from 'svelte';
 	import Map from '../components/Map.svelte';
 	import { strLen, invalidCoord, invalidDepth, lenForPark } from '../components/inputValidation'
 	import { Form, FormGroup, Input, Label } from 'sveltestrap/src';
 	import { Button, Modal,	ModalBody, ModalFooter,	ModalHeader } from 'sveltestrap/src';
 
+	let apiUrl = '';
+  	const { session } = stores();
+    const unsubscribe = session.subscribe(value => {
+    	apiUrl = value.API_URL;
+  	});
+  	onDestroy(unsubscribe);
+	
 	let select = true;
 	let newLat;
 	let newLon;
@@ -78,7 +86,7 @@
 				headers: { "Content-Type": "application/json" }
 			};
 
-		fetch("http://api.nenoapps.tk/sites/create", requestOptions)
+		fetch(`${apiUrl}/sites/create`, requestOptions)
 			.then((r) => {
 				if (r.status == 201 || r.status == 409) {
 					return r.json();

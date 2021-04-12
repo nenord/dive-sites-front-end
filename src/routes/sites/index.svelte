@@ -1,6 +1,6 @@
 <script context="module">
 	export function preload() {
-		return this.fetch(`http://api.nenoapps.tk/sites`).then(r => r.json()).then(sites => {
+		return this.fetch(`http://test1.nenoapps.tk/sites`).then(r => r.json()).then(sites => {
 			return { sites };
 		});
 	}
