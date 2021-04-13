@@ -54,7 +54,7 @@
 	</div>
 	<div class="map">
 		<Map lat={site.lat} lon={site.lon} zoom={12} select={false}}>
-			<MapMarker lat={site.lat} lon={site.lon} name={site.name} slug={site.slug}/>
+			<MapMarker lat={site.lat} lon={site.lon} name={site.name} slug={site._id}/>
 		</Map>
 	</div>
 </div>

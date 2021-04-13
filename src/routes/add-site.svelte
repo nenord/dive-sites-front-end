@@ -50,7 +50,7 @@
 		}
 	}
 
-	function addNewSite () {
+	async function addNewSite () {
 		if (strLen(siteName, 3, 30)) {
 			formValidator = "Site name needs to have 3-30 characters!";
 		}
@@ -86,7 +86,7 @@
 				headers: { "Content-Type": "application/json" }
 			};
 
-		fetch(`${apiUrl}/sites/create`, requestOptions)
+		await fetch(`${apiUrl}/sites/create`, requestOptions)
 			.then((r) => {
 				if (r.status == 201 || r.status == 409) {
 					return r.json();
