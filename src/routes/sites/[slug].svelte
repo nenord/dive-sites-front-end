@@ -1,6 +1,8 @@
 <script context="module">
-	export async function preload({ params }) {
-		const res = await this.fetch(`http://api.nenoapps.tk/sites/${params.slug}`);
+	//export async function preload({ params }) {
+	export async function preload(page, session) {
+		const { API_URL } = session;
+		const res = await this.fetch(`${API_URL}/sites/${page.params.slug}`);
 		const data = await res.json();
 
 		if (res.status === 200) {

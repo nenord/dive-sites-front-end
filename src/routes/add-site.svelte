@@ -135,7 +135,7 @@
 <p class="hide">To add a dive site, click on the site's location!</p>
 
 <div id="mapping">
-	<Map lat={55.95} lon={-3.18} zoom={8} {select} on:message={handleMessage}></Map>
+	<Map lat={55.95} lon={-3.18} zoom={6} {select} on:message={handleMessage}></Map>
 </div>
 
 <div>

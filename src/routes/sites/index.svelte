@@ -1,6 +1,7 @@
 <script context="module">
-	export function preload() {
-		return this.fetch(`http://api.nenoapps.tk/sites`).then(r => r.json()).then(sites => {
+	export function preload(page, session) {
+		const { API_URL } = session;
+		return this.fetch(`${API_URL}/sites`).then(r => r.json()).then(sites => {
 			return { sites };
 		});
 	}
@@ -25,10 +26,6 @@
 
 <ul>
 	{#each sites as site}
-		<!-- we're using the non-standard `rel=prefetch` attribute to
-				tell Sapper to heroku ad the data for the page as soon as
-				the user hovers over the link or taps it, instead of
-				waiting for the 'click' event -->
 		<li><a rel="prefetch" href="sites/{site._id}">{site.name}</a></li>
 	{/each}
 </ul>

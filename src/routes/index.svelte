@@ -1,6 +1,7 @@
 <script context="module">
-	export function preload(session) {
-		return this.fetch(`http://api.nenoapps.tk/sites`).then(r => r.json()).then(sites => {
+	export function preload(page, session) {
+		const { API_URL } = session;
+		return this.fetch(`${API_URL}/sites`).then(r => r.json()).then(sites => {
 			return { sites };
 		});
 	}
@@ -34,7 +35,7 @@
 <h2>Find dive sites</h2>
 
 <div id="mapping">
-	<Map lat={55.95} lon={-3.18} zoom={8} {select}>
+	<Map lat={55.95} lon={-3.18} zoom={6} {select}>
 		{#each sites as site}
 			<MapMarker lat={site.lat} lon={site.lon} name={site.name} slug={site._id}/>
 		{/each}
