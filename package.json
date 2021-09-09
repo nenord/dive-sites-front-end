@@ -10,6 +10,7 @@
   "dependencies": {
     "compression": "^1.7.1",
     "dotenv": "^8.2.0",
+    "form-data": "^4.0.0",
     "mapbox": "^1.0.0-beta10",
     "mapbox-gl": "^2.0.1",
     "polka": "^1.0.0-next.11",
