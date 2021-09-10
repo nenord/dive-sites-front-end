@@ -2,19 +2,16 @@
 	<title>Login</title>
 </svelte:head>
 
+<script context="module">
+  export function preload(page, session) {
+    console.log(session);
+  }
+</script>
+
 <script>
-    import { stores } from "@sapper/app";
-    import { onDestroy } from 'svelte';
     import { Form, FormGroup, Input, Label } from 'sveltestrap/src';
     import { isEmpty } from '../components/inputValidation'
     import { Button } from 'sveltestrap/src';
-
-    let apiUrl = '';
-  	const { session } = stores();
-    const unsubscribe = session.subscribe(value => {
-    	apiUrl = value.API_URL;
-  	});
-  	onDestroy(unsubscribe);
 
     let email = '';
     let password = '';
@@ -27,17 +24,16 @@
 			formValidator = "Email and password cannot be empty!";
 		}
         else {
-            var formdata = new FormData();
-            formdata.append("username", email);
-            formdata.append("password", password);
-
             var requestOptions = {
-                method: 'POST',
-                body: formdata,
-                redirect: 'follow'
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    Accept: "application/json",
+                },
+                body: JSON.stringify({ email, password }),
             };
 
-            await fetch(`${apiUrl}/token`, requestOptions)
+            await fetch('/login', requestOptions)
                 .then(r => r.json())
                 .then(r => {
                     if (r.access_token) {
