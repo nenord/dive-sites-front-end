@@ -8,7 +8,7 @@ import { json } from 'body-parser';
 import session from 'express-session';
 import sessionFileStore from 'session-file-store';
 
-const { PORT, NODE_ENV, API_URL } = process.env;
+const { PORT, NODE_ENV, API_URL, SESSION_SECRET } = process.env;
 const dev = NODE_ENV === 'development';
 
 const FileStore = new sessionFileStore(session);
@@ -17,11 +17,11 @@ polka() // You can also use Express
 	.use(
 		json(),
     	session({
-			secret: 'SomeSecretStringThatIsNotInGithub',
+			secret: SESSION_SECRET,
 			resave: true,
 			saveUninitialized: true,
 			cookie: {
-				maxAge: 31536000
+				maxAge: 300000
 			},
       		store: new FileStore({
         		path: `.sessions`
@@ -33,6 +33,7 @@ polka() // You can also use Express
 			session: (req, res) => {
 				return ({
 					access_token: req.session.access_token,
+					user_name: req.session.user_name,
 					API_URL: API_URL
 				})
 			}

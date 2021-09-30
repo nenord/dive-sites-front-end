@@ -9,6 +9,7 @@
 </script>
 
 <script>
+    import { goto, stores } from "@sapper/app";
     import { Form, FormGroup, Input, Label } from 'sveltestrap/src';
     import { isEmpty } from '../components/inputValidation'
     import { Button } from 'sveltestrap/src';
@@ -17,7 +18,7 @@
     let password = '';
     let formValidator = '';
 
-    let access_token;
+    const { session } = stores();
     
     async function loginUser () {
         if (isEmpty(email) || isEmpty(password)) {
@@ -37,8 +38,9 @@
                 .then(r => r.json())
                 .then(r => {
                     if (r.access_token) {
-                        access_token = r.access_token;
-                        formValidator = "";
+                        $session.access_token = r.access_token;
+                        $session.user_name = r.user_name;
+                        goto('/');
                     }
                     else {
                         formValidator = r.detail;
@@ -61,11 +63,11 @@
     <Form>
         <FormGroup>
             <Label for="email">Email</Label>
-            <Input plaintext id="email" bind:value={email} placeholder="Your email" />
+            <Input type="email" id="email" bind:value={email} placeholder="Your email" />
         </FormGroup>
         <FormGroup>
             <Label for="password">Password</Label>
-            <Input plaintext id="password" bind:value={password} placeholder="Your password" />
+            <Input type="password" id="password" bind:value={password} placeholder="Your password" />
         </FormGroup>
     </Form>
     <Button color="primary" on:click={loginUser}>Login</Button>
@@ -74,7 +76,5 @@
 <div id="display">
     {#if formValidator}
         <p>{formValidator}</p>
-    {:else if access_token}
-        <p>{access_token}</p>
     {/if}
 </div>

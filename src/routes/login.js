@@ -21,7 +21,8 @@ export async function post(req, res) {
 
     if (parsed.access_token) {
         req.session.access_token = parsed.access_token;
-        res.end(JSON.stringify({ access_token: parsed.access_token }));
+        req.session.user_name = parsed.user_name;
+        res.end(JSON.stringify({ access_token: parsed.access_token, user_name: parsed.user_name }));
     }
     else {
         res.end(JSON.stringify({ detail: parsed.detail }));
