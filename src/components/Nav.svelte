@@ -105,6 +105,6 @@
     	{/if}		
 	</ul>
 	{#if userExists}
-		<h6>Hello {userExists}!</h6>
+		<h6>Hello {userExists} !</h6>
 	{/if}
 </nav>

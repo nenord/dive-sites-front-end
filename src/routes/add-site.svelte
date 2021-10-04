@@ -4,14 +4,22 @@
 
 <script>
 	import { goto, stores } from "@sapper/app";
-	import { onDestroy } from 'svelte';
+	import { onMount, onDestroy } from 'svelte';
 	import Map from '../components/Map.svelte';
 	import { strLen, invalidCoord, invalidDepth, lenForPark } from '../components/inputValidation'
 	import { Form, FormGroup, Input, Label } from 'sveltestrap/src';
 	import { Button, Modal,	ModalBody, ModalFooter,	ModalHeader } from 'sveltestrap/src';
 
 	let apiUrl = '';
+
   	const { session } = stores();
+
+	onMount(() => {
+		if (!($session.access_token)) {
+			goto('/login?next=add-site');
+		}
+  	});
+
     const unsubscribe = session.subscribe(value => {
     	apiUrl = value.API_URL;
   	});
@@ -21,6 +29,7 @@
 	let newLat;
 	let newLon;
 	let newSlug;
+	let tokenExpired = false;
 	let siteName = '';
 	let siteDesc = '';
 	let siteDepth;
@@ -46,7 +55,10 @@
 		formValidator = '';
 		serverErr = '';
 		if (newSlug) {
-			goto(`/sites/${newSlug}`)
+			goto(`/sites/${newSlug}`);
+		}
+		else if (tokenExpired) {
+			goto('/login');
 		}
 	}
 
@@ -83,14 +95,21 @@
 			var requestOptions = {
 				method: 'POST',
 				body: JSON.stringify(payload),
-				headers: { "Content-Type": "application/json" }
+				headers: { 
+					"Content-Type": "application/json",
+					"Authorization": `Bearer ${$session.access_token}`
+				}
 			};
 
 		await fetch(`${apiUrl}/sites/create`, requestOptions)
 			.then((r) => {
 				if (r.status == 201 || r.status == 409) {
 					return r.json();
-				} 
+				}
+				else if (r.status == 401) {
+					tokenExpired = true;
+					return r.json();
+				}
 				else {
 					return r.text();
 				}
@@ -140,8 +159,8 @@
 
 <div>
 	<Modal isOpen={open} toggle={cancelModal}>
-	  <ModalHeader toggle={cancelModal}>Add a new site</ModalHeader>
-	  <ModalBody>
+	<ModalHeader toggle={cancelModal}>Add a new site</ModalHeader>
+	<ModalBody>
 		{#if !itIsAdded}
 			<Form>
 				<FormGroup>
@@ -181,12 +200,14 @@
 			{/if}
 		{/if}
 		<p style="color: rgb(167, 23, 23)">{formValidator}</p>
-	  </ModalBody>
-	  <ModalFooter>
+	</ModalBody>
+	<ModalFooter>
 		<Button color="primary" on:click={addNewSite} disabled={itIsAdded}>Add a site</Button>
 		<Button color="secondary" on:click={cancelModal}>
 			{itIsAdded ? "Close" : "Cancel"}
 		</Button>
-	  </ModalFooter>
+	</ModalFooter>
 	</Modal>
 </div>
+
+

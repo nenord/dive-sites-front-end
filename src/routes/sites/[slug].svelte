@@ -1,7 +1,7 @@
 <script context="module">
-	//export async function preload({ params }) {
 	export async function preload(page, session) {
 		const { API_URL } = session;
+
 		const res = await this.fetch(`${API_URL}/sites/${page.params.slug}`);
 		const data = await res.json();
 
