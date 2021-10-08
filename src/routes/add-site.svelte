@@ -58,6 +58,8 @@
 			goto(`/sites/${newSlug}`);
 		}
 		else if (tokenExpired) {
+			$session.access_token = null;
+			$session.user_name = null;
 			goto('/login');
 		}
 	}

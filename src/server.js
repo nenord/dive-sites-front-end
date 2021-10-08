@@ -18,7 +18,7 @@ polka() // You can also use Express
 		json(),
     	session({
 			secret: SESSION_SECRET,
-			resave: true,
+			resave: false,
 			saveUninitialized: true,
 			cookie: {
 				maxAge: 300000

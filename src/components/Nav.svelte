@@ -4,13 +4,11 @@
 	export let segment;
 
 	let tokenExists = '';
-	let userExists = '';
 	let message = '';
 
 	const { session } = stores();
     const unsubscribe = session.subscribe(value => {
     	tokenExists = value.access_token;
-		userExists = value.user_name;
   	});
   	onDestroy(unsubscribe);
 
@@ -78,11 +76,6 @@
 		bottom: -1px;
 	}
 
-	h6 {
-		padding-top: 1em;
-		padding-bottom: 0.5em;
-	}
-
 	a {
 		text-decoration: none;
 		padding: 1em 0.5em;
@@ -98,13 +91,13 @@
 		<!-- for the blog link, we're using rel=prefetch so that Sapper prefetches
 		     the blog data when we hover over the link or tap it on a touchscreen -->
 		<li><a rel=prefetch aria-current="{segment === 'sites' ? 'page' : undefined}" href="sites">Sites</a></li>
-		{#if !tokenExists}
-        	<li><a rel=prefetch aria-current="{segment === 'login' ? 'page' : undefined}" href="login">Login</a></li>
-    	{:else}
-			<li><a  href="login" on:click={logoutUser}>Logout</a></li>
-    	{/if}		
+				
 	</ul>
-	{#if userExists}
-		<h6>Hello {userExists} !</h6>
-	{/if}
+	<ul>
+		{#if !tokenExists}
+			<li><a rel=prefetch aria-current="{segment === 'login' ? 'page' : undefined}" href="login">Login</a></li>
+		{:else}
+			<li><a  href="login" on:click={logoutUser}>Logout</a></li>
+		{/if}
+	</ul>
 </nav>
