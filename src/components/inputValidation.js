@@ -16,7 +16,22 @@ export function invalidDepth (depth) {
 
 export function lenForPark (val, min, max) {
     if (val.trim().length == 0 ) {
-        return false
+        return false;
     }
     return ((val.trim().length < min) || (val.trim().length > max))
+}
+
+export function passwodComplexity(password) {
+    var upper = /[A-Z]/,
+        lower = /[a-z]/,
+        number = /[0-9]/,
+        special = /[ $£!"#$%&'()*+,\-./:;<=>?@[\\\]^_`{|}~]/;
+
+    if (upper.test(password) &&
+        lower.test(password) &&
+        number.test(password) &&
+        special.test(password)) {
+        return false;
+    }
+    return true;
 }

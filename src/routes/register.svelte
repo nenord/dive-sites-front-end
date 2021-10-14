@@ -6,7 +6,7 @@
     import { goto, stores } from "@sapper/app";
     import { onMount, onDestroy } from 'svelte';
     import { Form, FormGroup, Input, Label } from 'sveltestrap/src';
-    import { isEmpty, strLen } from '../components/inputValidation'
+    import { passwodComplexity, strLen } from '../components/inputValidation'
     import { Button, Modal,	ModalBody, ModalFooter,	ModalHeader } from 'sveltestrap/src';
 
     let apiUrl = '';
@@ -36,14 +36,17 @@
 	}
     
     async function registerUser () {
-        if (isEmpty(email) || isEmpty(password) || isEmpty(userName) || isEmpty(passwordCheck)) {
-			formValidator = "Please fill in all fields!";
+        if (strLen(userName, 3, 32)) {
+			formValidator = "Username must be 3 to 32 characters long!";
 		}
-        if (strLen(password, 8, 16)) {
+        else if (strLen(password, 8, 16)) {
             formValidator = "Password must be 8 to 16 characters long!";
         }
+        else if(passwodComplexity(password)) {
+            formValidator = "Password must have at least one uppercase and one lowercase letter, one number and one special character!"
+        }
         else if (password != passwordCheck) {
-            formValidator = "Password must match!";
+            formValidator = "Passwords must match!";
         }
         else {
             var requestOptions = {
@@ -75,7 +78,8 @@
                     }
                     else {
                         let info = JSON.parse(result);
-                        formValidator = `Error (${info.detail[0].loc[1]}): ${info.detail[0].msg}`;
+                        const errorStr = `${info.detail[0].loc[1]}: ${info.detail[0].msg}!`;
+                        formValidator = errorStr.charAt(0).toUpperCase() + errorStr.slice(1);
                     }
 			    });
         }
