@@ -6,10 +6,9 @@ A front end for https://github.com/nenord/dive-sites-api.
 
 Built using Sapper/Svelte
 
-Deployed via Dokku running on Google Cloud VM.
+Deployed via Dokku running on Digital Ocean VM.
 
 ## Roadmap
-Add users and login to track who created the app
 
 Edit sites – only if a user created the site (or user is Admin)
 
