@@ -1,20 +1,7 @@
 <script>
 	import { goto, stores } from "@sapper/app";
 	import { onDestroy } from 'svelte';
-	import {
-		Collapse,
-		Navbar,
-		NavbarToggler,
-		NavbarBrand,
-		Nav,
-		NavItem,
-		NavLink
-  	} from 'sveltestrap/src';
-
-	let isOpen = false;
-	function toggleClose () {
-		isOpen = false;
-	}
+	export let segment;
 
 	let tokenExists = '';
 	let message = '';
@@ -41,31 +28,76 @@
 			console.log(message);
 			$session.access_token = null;
 			$session.user_name = null;
-			isOpen = false;
 			goto('/login');
 	}
 </script>
 
-<Navbar color="primary" light expand="md">
-	<NavbarBrand href="/" on:click={toggleClose}>apneamap</NavbarBrand>
-	<NavbarToggler on:click={() => (isOpen = !isOpen)} />
-	<Collapse {isOpen} navbar expand="md">
-	  <Nav class="ms-auto" navbar>
-		<NavItem>
-		  <NavLink href="/add-site" on:click={toggleClose}>Add sites</NavLink>
-		</NavItem>
-		<NavItem>
-		  <NavLink href="/sites" on:click={toggleClose}>Sites</NavLink>
-		</NavItem>
+<style>
+	nav {
+		position: relative;
+		border-bottom: 1px solid rgba(255,62,0,0.1);
+		font-weight: 300;
+		padding: 0 1em;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+
+	ul {
+		margin: 0;
+		padding: 0;
+		align-items: baseline;
+	}
+
+	/* clearfix */
+	ul::after {
+		content: '';
+		display: block;
+		clear: both;
+	}
+
+	li {
+		display: block;
+		float: left;
+	}
+
+	[aria-current] {
+		position: relative;
+		display: inline-block;
+	}
+
+	[aria-current]::after {
+		position: absolute;
+		content: '';
+		width: calc(100% - 1em);
+		height: 2px;
+		background-color: rgb(255,62,0);
+		display: block;
+		bottom: -1px;
+	}
+
+	a {
+		text-decoration: none;
+		padding: 1em 0.5em;
+		display: block;
+	}
+</style>
+
+<nav>
+	<ul>
+		<li><a aria-current="{segment === undefined ? 'page' : undefined}" href=".">Home</a></li>
+		<li><a aria-current="{segment === 'add-site' ? 'page' : undefined}" href="add-site">Add sites</a></li>
+
+		<!-- for the blog link, we're using rel=prefetch so that Sapper prefetches
+		     the blog data when we hover over the link or tap it on a touchscreen -->
+		<li><a rel=prefetch aria-current="{segment === 'sites' ? 'page' : undefined}" href="sites">Sites</a></li>
+				
+	</ul>
+	<ul>
 		{#if !tokenExists}
-			<NavItem>
-				<NavLink href="/login" on:click={toggleClose}>Login</NavLink>
-			</NavItem>
+			<li><a rel=prefetch aria-current="{segment === 'login' ? 'page' : undefined}" href="login">Login</a></li>
 		{:else}
-			<NavItem>
-				<NavLink on:click={logoutUser} >Logout</NavLink>
-			</NavItem>
+			<li><a  href="login" on:click={logoutUser}>Logout</a></li>
 		{/if}
-	  </Nav>
-	</Collapse>
-  </Navbar>
+	</ul>
+</nav>

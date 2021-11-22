@@ -127,7 +127,7 @@
 
 <div>
 	<Modal isOpen={open} toggle={cancelModal}>
-	<ModalHeader toggle={cancelModal}>Add a new user</ModalHeader>
+	<ModalHeader toggle={cancelModal}>Add a new site</ModalHeader>
 	<ModalBody>
         <h6>User '{userName}' added!</h6>
 	</ModalBody>
